@@ -1,13 +1,35 @@
+import {FetchDependents_Loadding, FetchDependents_Success, FetchDependents_Error } from '../actions/dependentsAction'
 
-const initialState =  {
-    DependentsList : [],
+
+const initialState = {
+    dependentsList : [],
+    loading: false,
+    errorMessage:"",
 }
 
-const Fetch_Dependents = (state = initialState, action )=>{
+const DependentsReducer = (state = initialState, action )=>{
     switch (action.type){
+        case FetchDependents_Loadding: 
+            return {
+                ...state,
+                loading: true
+            }
+        case FetchDependents_Success: 
+        return {
+            ...state,
+            loading:false,
+            dependentsList: action.dependents
+            
+        }
+        case FetchDependents_Error: 
+        return{
+            ...state,
+            loading:false,
+            errorMessage:action.error
+        }
         default:
             return state
     }
 }
 
-export default dependentsReducer;
+export default DependentsReducer ;

@@ -1,89 +1,43 @@
-import React from 'react';
+import React, {Component} from 'react';
 import {Table} from 'reactstrap';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 import './DependentsTable.css'
+import { connect } from 'react-redux';
 
-const DependentsTable=() =>{
-    return(
-        <div>
-            <h3>[NombreCompleto] </h3>
-            <div className="header" >
-                <div className="subHeader">
-                <h5 > Dependientes  </h5>
-                </div>
-                    <Button variant="fab" color="secondary" aria-label="Add">
-                        <AddIcon />
-                    </Button>
-            </div>
-            <Table dark>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Nombre</th>
-                        <th>Apellido Materno</th>
-                        <th>Apellido Paterno</th>
-                        <th>Edad</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th scope="row">
-                            1
-                        </th>
-                        <td>
-                            Jose    
-                        </td>
-                        <td>
-                            Perez    
-                        </td>
-                        <td>
-                            Lopez    
-                        </td>
-                        <td>
-                            15    
-                        </td>
-                    </tr>
-                    
-                    <tr>
-                        <th scope="row">
-                            2
-                        </th>
-                        <td>
-                            Pedro    
-                        </td>
-                        <td>
-                            Gonzalez    
-                        </td>
-                        <td>
-                            Solis    
-                        </td>
-                        <td>
-                            3  
-                        </td>
-                    </tr>
-
-                                        <tr>
-                        <th scope="row">
-                            3
-                        </th>
-                        <td>
-                            Maria    
-                        </td>
-                        <td>
-                            Lopez    
-                        </td>
-                        <td>
-                            Perez    
-                        </td>
-                        <td>
-                            20    
-                        </td>
-                    </tr>
-                </tbody>
-            </Table>
-        </div>
-    )
-    
+class DependentsTable extends Component{
+    render() {
+        return(
+                <Table dark>
+                    <thead>
+                        <tr>
+                            <th>_id</th>
+                            <th>nombre_completo</th>
+                            <th>edad</th>
+                            <th>dependencia</th>
+                            <th>_usuario</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {this.props.dependentsList.map(x=> {
+                            return(
+                                <tr key={x._id}>
+                                    <td>{x._id}</td>
+                                    <td>{x.nombre_completo}</td>
+                                    <td>{x.edad}</td>
+                                    <td>{x.dependencia}</td>
+                                    <td>{x._usuario}</td>
+                                </tr>
+                            )         
+                        })}
+                    </tbody>
+                </Table>
+        )
+    }
 }
-export default DependentsTable;
+
+const mapStateToProps = (state)=>{
+    return{
+        dependentsList: state.dependentsList
+    }
+}
+
+export default connect(mapStateToProps)(DependentsTable);

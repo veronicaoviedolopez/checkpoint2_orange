@@ -1,14 +1,2 @@
-.header{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-right: 10px;
-}
 
-.subHeader{
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    padding-right: 10px;
-}
 
