@@ -1,11 +1,11 @@
-import React, {Component} from 'react';
+import React from 'react';
 import {Table} from 'reactstrap';
 import './DependentsTable.css'
 import { connect } from 'react-redux';
+import DeleteIcon from '@material-ui/icons/Delete';
+import EditIcon from '@material-ui/icons/Edit';
 
-class DependentsTable extends Component{
-    render() {
-        return(
+const DependentsTable =props => 
                 <Table dark>
                     <thead>
                         <tr>
@@ -14,10 +14,13 @@ class DependentsTable extends Component{
                             <th>edad</th>
                             <th>dependencia</th>
                             <th>_usuario</th>
+                            <th></th>
+                            <th></th>
+                            <th></th>
                         </tr>
                     </thead>
                     <tbody>
-                        {this.props.dependentsList.map(x=> {
+                        {props.dependentsList.map(x=> {
                             return(
                                 <tr key={x._id}>
                                     <td>{x._id}</td>
@@ -25,14 +28,13 @@ class DependentsTable extends Component{
                                     <td>{x.edad}</td>
                                     <td>{x.dependencia}</td>
                                     <td>{x._usuario}</td>
+                                    <td><EditIcon/></td>
+                                    <td><DeleteIcon onClick={props.onDeleteDependents}/></td>
                                 </tr>
                             )         
                         })}
                     </tbody>
                 </Table>
-        )
-    }
-}
 
 const mapStateToProps = (state)=>{
     return{

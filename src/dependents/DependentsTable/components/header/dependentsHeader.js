@@ -1,7 +1,5 @@
 import React from 'react';
 import './dependentsHeader.css';
-import Button from '@material-ui/core/Button';
-import AddIcon from '@material-ui/icons/Add';
 
 const Header = props => 
     <div>
@@ -10,9 +8,7 @@ const Header = props =>
                     <div className="subHeader">
                         <h5> Dependientes  </h5>
                     </div>
-                    <Button variant="fab" color="secondary" aria-label="Add">
-                        <AddIcon />
-                    </Button>
+                    
                 </div>
     </div>
 
