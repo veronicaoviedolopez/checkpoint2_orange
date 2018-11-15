@@ -67,11 +67,25 @@ const AddDependentsSuccess = () => ({
 })
 
 
-const deleteDependent = () =>({
-    type: DeleteDependent_Dialog
-})
+const DeleteDependent =(_id, _usuario )=>{
+    return async(dispatch) =>{
+        dispatch(FetchDependentsLoadding());
+        try{
+            await axios.delete(`https://g4-ch2.herokuapp.com/api/dependientes/orange/${_id}`);
+            dispatch(FetchDependents(_usuario));
+            dispatch(AddDependentsSuccess());
+        }
+        catch(error){
+            dispatch(FetchDependentsError(error));
+        }
+
+    }
+}
+
 
 export {
     FetchDependents as fetchDependents, 
     AddDependents as addDependents, 
-    ShowModal as showModal};
+    ShowModal as showModal,
+    DeleteDependent as deleteDepentent,
+    };

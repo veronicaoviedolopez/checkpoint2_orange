@@ -29,7 +29,7 @@ const DependentsTable =props =>
                                     <td>{x.dependencia}</td>
                                     <td>{x._usuario}</td>
                                     <td><EditIcon/></td>
-                                    <td><DeleteIcon onClick={props.onDeleteDependents}/></td>
+                                    <td><DeleteIcon onClick={()=>props.onDeleteDependents(x._id)}/></td>
                                 </tr>
                             )         
                         })}

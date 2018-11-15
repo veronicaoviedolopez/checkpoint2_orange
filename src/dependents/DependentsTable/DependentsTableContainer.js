@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import DependentsTable from './components/DependentsTable';
 import { connect } from 'react-redux';
-import {fetchDependents, showModal} from './../../../src/state/actions/dependentsAction';
+import {fetchDependents, showModal, deleteDepentent} from './../../../src/state/actions/dependentsAction';
 import loaddingImage from     './../../../src/images/Loading_icon.gif';
 import DependentsHeader from './components/header/dependentsHeader'
 import Button from '@material-ui/core/Button';
@@ -20,8 +20,9 @@ class DependentsTableContainer extends Component {
         this.props.fetchDependents(this.props.match.params.usuario);
     }
     
-    handleDeleteDependents=() =>{
-        console.log("voy a borrar");
+    handleDeleteDependents=(id) =>{
+        console.log("voy a borrar", id);
+        this.props.deleteDepentent(id,this.props.match.params.usuario);
     }
 
     render(){
@@ -49,6 +50,7 @@ class DependentsTableContainer extends Component {
 const mapDispatchToProps = {
     fetchDependents,
     showModal,
+    deleteDepentent,
 }
 
 const mapStateToProps = (state) => {
