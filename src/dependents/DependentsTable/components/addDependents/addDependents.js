@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {connect} from 'react-redux';
-import {showModal,addDependents} from  './../../../../state/actions/dependentsAction';
+import {showAddModal,addDependent} from  './../../../../state/actions/dependentsAction';
 
 
 class AddDependentsDialog extends React.Component {
@@ -30,7 +30,7 @@ class AddDependentsDialog extends React.Component {
   }
 
   handleClickAddDependent = () => {
-    this.props.addDependents(this.state.nombre, this.state.parentesco,this.state.edad,this.props.userId);
+    this.props.addDependent(this.state.nombre, this.state.parentesco,this.state.edad,this.props.userId);
     this.clearInputs();
   }
 
@@ -114,8 +114,8 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  showModal,
-  addDependents
+  showAddModal,
+  addDependent
 }
 
 

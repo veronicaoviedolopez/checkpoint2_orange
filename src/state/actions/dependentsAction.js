@@ -3,11 +3,15 @@ import axios from 'axios';
 export const FetchDependents_Loadding = "FECTH_DEPENDENTS_LOADDING";
 export const FetchDependents_Success ="FETCH_DEPENDENTS_SUCCESS";
 export const FetchDependents_Error = "FETCH_DEPENDENTS_ERROR";
-export const AddDependents_Dialog = "ADD_DEPENDENTS_DIALOG";
-export const ShowDependents_Dialog = "SHOW_DEPENDENTS_DIALOG";
-export const DeleteDependent_Dialog = "DELETE_DEPENDENT_DIALOG";
-export const DeletedDependents_Dialog = "DELETED_DEPENDENT_DIALOG"
 
+export const ShowAddDependents_Dialog = "SHOW_ADD_DEPENDENT_DIALOG";
+export const AddedDependent = "ADDED_DEPENDENT";
+
+
+export const ShowDeleteDependent_Dialog = "SHOW_DELETE_DEPENDENT_DIALOG";
+export const DeletedDependent = "DELETED_DEPENDENT"
+
+// SHOW ALL DEPENDENTS BY USERID
 const FetchDependents = (props) => {
     return async (dispatch) => {
         dispatch(FetchDependentsLoadding());
@@ -36,13 +40,14 @@ const FetchDependentsError = (error) =>({
     error,
 })
 
-const ShowModal = () =>({
-    type: ShowDependents_Dialog
+
+
+// ADD A DEPENDENT
+const ShowAddModal = () =>({
+    type: ShowAddDependents_Dialog
 })
 
-
-
-const AddDependents = (nombre_completo,dependencia, edad, _usuario) =>{
+const AddDependent = (nombre_completo,dependencia, edad, _usuario) =>{
     return async (dispatch) => {
         dispatch(FetchDependentsLoadding());
         try{
@@ -55,7 +60,7 @@ const AddDependents = (nombre_completo,dependencia, edad, _usuario) =>{
                 }
             );
             dispatch(FetchDependents(_usuario));
-            dispatch(AddDependentsSuccess());
+            dispatch(AddDependentSuccess());
         }
         catch(error){
             dispatch(FetchDependentsError(error));
@@ -63,21 +68,17 @@ const AddDependents = (nombre_completo,dependencia, edad, _usuario) =>{
     }
 }
 
-const AddDependentsSuccess = () => ({
-    type: AddDependents_Dialog
-})
-
-const DeletedDependentSuccess =() =>({
-    type:DeletedDependents_Dialog
+const AddDependentSuccess = () => ({
+    type: AddedDependent
 })
 
 
+//DELETE A DEPENDENT
 const ShowDeleteModal = (dependentId, dependentName) =>({
-    type: DeleteDependent_Dialog,
+    type: ShowDeleteDependent_Dialog,
     dependentId, 
     dependentName,
 })
-
 const DeleteDependent =(_id, _usuario)=>{
     return async(dispatch) =>{
         dispatch(FetchDependentsLoadding());
@@ -92,12 +93,17 @@ const DeleteDependent =(_id, _usuario)=>{
 
     }
 }
+const DeletedDependentSuccess =() =>({
+    type:DeletedDependent
+})
+
+
 
 
 export {
     FetchDependents as fetchDependents, 
-    AddDependents as addDependents, 
-    ShowModal as showModal,
+    AddDependent as addDependent, 
+    ShowAddModal as showAddModal,
     DeleteDependent as deleteDependent,
     ShowDeleteModal as showDeleteModal
     };

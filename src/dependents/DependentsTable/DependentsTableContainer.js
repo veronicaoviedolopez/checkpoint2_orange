@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import DependentsTable from './components/DependentsTable';
 import { connect } from 'react-redux';
-import {fetchDependents, showModal, deleteDependent, showDeleteModal} from './../../../src/state/actions/dependentsAction';
+import {fetchDependents, showAddModal, deleteDependent, showDeleteModal} from './../../../src/state/actions/dependentsAction';
 import loaddingImage from     './../../../src/images/Loading_icon.gif';
 import DependentsHeader from './components/header/dependentsHeader'
 import Button from '@material-ui/core/Button';
@@ -12,17 +12,14 @@ import DeleteDependentDialog from './components/deleteDepedent/deleteDependent';
 
 class DependentsTableContainer extends Component {
     handleClickSetDependents = () => {
-        console.log(this.props.showingModal);
-        this.props.showModal();
+        this.props.showAddModal();
     }
-
 
     componentDidMount(){
         this.props.fetchDependents(this.props.match.params.usuario);
     }
     
     handleDeleteDependents=(id, nombre) =>{
-        console.log("voy a borrar", nombre);
         this.props.showDeleteModal(id, nombre);
         //this.props.deleteDepentent(id,this.props.match.params.usuario);
     }
@@ -52,7 +49,7 @@ class DependentsTableContainer extends Component {
 
 const mapDispatchToProps = {
     fetchDependents,
-    showModal,
+    showAddModal,
     deleteDependent,
     showDeleteModal,
 }

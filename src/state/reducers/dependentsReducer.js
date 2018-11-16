@@ -1,4 +1,7 @@
-import {FetchDependents_Loadding, FetchDependents_Success, FetchDependents_Error, ShowDependents_Dialog, AddDependents_Dialog, DeleteDependent_Dialog, DeletedDependents_Dialog} from '../actions/dependentsAction'
+import {
+    FetchDependents_Loadding, FetchDependents_Success, FetchDependents_Error, 
+    ShowAddDependents_Dialog, AddedDependent, 
+    ShowDeleteDependent_Dialog, DeletedDependent} from '../actions/dependentsAction'
 
 const initialState = {
     dependentsList : [],
@@ -36,25 +39,25 @@ const DependentsReducer = (state = initialState, action )=>{
             loading:false,
             errorMessage:action.error
         }
-        case ShowDependents_Dialog:
+        case ShowAddDependents_Dialog:
             return{
                 ...state,
                 showingModal: !state.showingModal,
             }
-        case AddDependents_Dialog:
+        case AddedDependent:
         return{
             ...state,
             loading: false,
             showingModal: false,
         }
-        case DeleteDependent_Dialog:
+        case ShowDeleteDependent_Dialog:
         return{
             ...state,
             showingDeleteModal: !state.showingDeleteModal,
             dependentId: action.dependentId, 
             dependentName: action.dependentName,
         }
-        case DeletedDependents_Dialog:
+        case DeletedDependent:
         return{
             ...state,
             loading: false,

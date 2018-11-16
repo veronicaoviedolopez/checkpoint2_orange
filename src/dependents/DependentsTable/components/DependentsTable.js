@@ -9,9 +9,9 @@ const DependentsTable =props =>
                 <Table dark>
                     <thead>
                         <tr>
-                            <th>nombre_completo</th>
-                            <th>edad</th>
-                            <th>dependencia</th>
+                            <th>Nombre Completo</th>
+                            <th>Edad</th>
+                            <th>Parentesco</th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -23,7 +23,7 @@ const DependentsTable =props =>
                                     <td>{x.nombre_completo}</td>
                                     <td>{x.edad}</td>
                                     <td>{x.dependencia}</td>
-                                    <td><EditIcon/></td>
+                                    <td><EditIcon /></td>
                                     <td><DeleteIcon onClick={()=>props.onDeleteDependents(x._id,x.nombre_completo)}/></td>
                                 </tr>
                             )         

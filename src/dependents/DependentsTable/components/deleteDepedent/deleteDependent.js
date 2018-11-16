@@ -14,8 +14,6 @@ class DeleteDependentDialog extends React.Component {
     }
   
     handleClickDeleteDependent = () => {
-      console.log("dependiente a borrar: ",this.props.dependentId);
-      console.log("del usuario: ",this.props.userId);
       this.props.deleteDependent(this.props.dependentId, this.props.userId);
     }
    
@@ -29,9 +27,12 @@ class DeleteDependentDialog extends React.Component {
           >
             <DialogTitle id="form-dialog-title">Eliminar Dependiente</DialogTitle>
             <DialogContent>
-            <p>Estas seguro que deseas eliminar el dependiente selecionado: {this.props.dependentName}?</p>
-            {this.props.dependentId}<br></br>
-            {this.props.userId}
+            <p>¿Esta seguro que desea eliminar el dependiente seleccionado
+              <br>
+              </br>
+              {this.props.dependentName} ?
+            </p>
+
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">
