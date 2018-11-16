@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import DependentsTable from './components/DependentsTable';
 import { connect } from 'react-redux';
-import {fetchDependents, showModal, deleteDepentent} from './../../../src/state/actions/dependentsAction';
+import {fetchDependents, showModal, deleteDependent, showDeleteModal} from './../../../src/state/actions/dependentsAction';
 import loaddingImage from     './../../../src/images/Loading_icon.gif';
 import DependentsHeader from './components/header/dependentsHeader'
 import Button from '@material-ui/core/Button';
 import AddIcon from '@material-ui/icons/Add';
 import AddDependentsDialog from './components/addDependents/addDependents';
+import DeleteDependentDialog from './components/deleteDepedent/deleteDependent';
 
 
 class DependentsTableContainer extends Component {
@@ -20,9 +21,10 @@ class DependentsTableContainer extends Component {
         this.props.fetchDependents(this.props.match.params.usuario);
     }
     
-    handleDeleteDependents=(id) =>{
-        console.log("voy a borrar", id);
-        this.props.deleteDepentent(id,this.props.match.params.usuario);
+    handleDeleteDependents=(id, nombre) =>{
+        console.log("voy a borrar", nombre);
+        this.props.showDeleteModal(id, nombre);
+        //this.props.deleteDepentent(id,this.props.match.params.usuario);
     }
 
     render(){
@@ -32,8 +34,9 @@ class DependentsTableContainer extends Component {
                 <Button variant="fab" color="secondary" aria-label="Add" onClick={this.handleClickSetDependents}  >
                         <AddIcon />
                 </Button>    
-                <DependentsTable onDeleteDependents={(e)=>this.handleDeleteDependents(e)} ></DependentsTable>
+                <DependentsTable onDeleteDependents={(id, nombre)=>this.handleDeleteDependents(id, nombre)} ></DependentsTable>
                 <AddDependentsDialog></AddDependentsDialog>
+                <DeleteDependentDialog></DeleteDependentDialog>
                 { this.props.loading ?
                     <img src={loaddingImage} alt=""/>
                     :null 
@@ -50,7 +53,8 @@ class DependentsTableContainer extends Component {
 const mapDispatchToProps = {
     fetchDependents,
     showModal,
-    deleteDepentent,
+    deleteDependent,
+    showDeleteModal,
 }
 
 const mapStateToProps = (state) => {

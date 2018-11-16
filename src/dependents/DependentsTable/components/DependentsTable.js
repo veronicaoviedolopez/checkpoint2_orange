@@ -9,12 +9,9 @@ const DependentsTable =props =>
                 <Table dark>
                     <thead>
                         <tr>
-                            <th>_id</th>
                             <th>nombre_completo</th>
                             <th>edad</th>
                             <th>dependencia</th>
-                            <th>_usuario</th>
-                            <th></th>
                             <th></th>
                             <th></th>
                         </tr>
@@ -23,13 +20,11 @@ const DependentsTable =props =>
                         {props.dependentsList.map(x=> {
                             return(
                                 <tr key={x._id}>
-                                    <td>{x._id}</td>
                                     <td>{x.nombre_completo}</td>
                                     <td>{x.edad}</td>
                                     <td>{x.dependencia}</td>
-                                    <td>{x._usuario}</td>
                                     <td><EditIcon/></td>
-                                    <td><DeleteIcon onClick={()=>props.onDeleteDependents(x._id)}/></td>
+                                    <td><DeleteIcon onClick={()=>props.onDeleteDependents(x._id,x.nombre_completo)}/></td>
                                 </tr>
                             )         
                         })}
