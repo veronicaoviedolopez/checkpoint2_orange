@@ -23,8 +23,8 @@ const DependentsTable =props =>
                                     <td>{x.nombre_completo}</td>
                                     <td>{x.edad}</td>
                                     <td>{x.dependencia}</td>
-                                    <td><EditIcon /></td>
-                                    <td><DeleteIcon onClick={()=>props.onDeleteDependents(x._id,x.nombre_completo)}/></td>
+                                    <td><EditIcon onClick= {()=>props.onUpdateDependent(x)}/></td>
+                                    <td><DeleteIcon onClick={()=>props.onDeleteDependent(x._id,x.nombre_completo)}/></td>
                                 </tr>
                             )         
                         })}

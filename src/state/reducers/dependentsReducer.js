@@ -1,7 +1,9 @@
 import {
     FetchDependents_Loadding, FetchDependents_Success, FetchDependents_Error, 
     ShowAddDependents_Dialog, AddedDependent, 
-    ShowDeleteDependent_Dialog, DeletedDependent} from '../actions/dependentsAction'
+    ShowDeleteDependent_Dialog, DeletedDependent,
+    Set_Dependent
+} from '../actions/dependentsAction'
 
 const initialState = {
     dependentsList : [],
@@ -11,11 +13,12 @@ const initialState = {
     showingModal: false,
     showingDeleteModal: false,
     dependentName :"",
-    newDependent:{
+    dependent:{
+        _id:0,
         nombre_completo: "",
         dependencia: "",
-        edad:0,
-        _usuario: "5bda5ef5307f170015f93e56",
+        edad:10,
+        _usuario: "",
     },
 }
 
@@ -62,6 +65,11 @@ const DependentsReducer = (state = initialState, action )=>{
             ...state,
             loading: false,
             showingDeleteModal: false,
+        }
+        case Set_Dependent:
+        return{
+            ...state,
+            dependent : action.dependent,
         }
         default:
             return state

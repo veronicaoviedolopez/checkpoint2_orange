@@ -11,6 +11,10 @@ export const AddedDependent = "ADDED_DEPENDENT";
 export const ShowDeleteDependent_Dialog = "SHOW_DELETE_DEPENDENT_DIALOG";
 export const DeletedDependent = "DELETED_DEPENDENT"
 
+
+export const Set_Dependent = "SET_DEPENDENT";
+
+
 // SHOW ALL DEPENDENTS BY USERID
 const FetchDependents = (props) => {
     return async (dispatch) => {
@@ -98,6 +102,16 @@ const DeletedDependentSuccess =() =>({
 })
 
 
+//UPDATE DEPENDENT
+const SetDependent = (dependent)=>({
+    type: Set_Dependent,
+    dependent
+})
+
+const UpdateDependent = (dependent)=>({
+    type: Set_Dependent,
+    dependent
+})
 
 
 export {
@@ -105,5 +119,6 @@ export {
     AddDependent as addDependent, 
     ShowAddModal as showAddModal,
     DeleteDependent as deleteDependent,
-    ShowDeleteModal as showDeleteModal
+    ShowDeleteModal as showDeleteModal,
+    SetDependent as setDependent
     };

@@ -10,11 +10,16 @@ import {showAddModal,addDependent} from  './../../../../state/actions/dependents
 
 
 class AddDependentsDialog extends React.Component {
-  state= {
-    nombre :"",
-    edad: "",
-    parentesco:"",
+  constructor(props){
+    super(props);
+    this.state= {
+      nombre : "",
+      edad: 0,
+      parentesco: "",
+    }
   }
+ 
+  
 
   clearInputs = ()=>{
     this.setState({
@@ -25,7 +30,7 @@ class AddDependentsDialog extends React.Component {
   }
 
   handleClose = () => {
-    this.props.showModal();
+    this.props.showAddModal();
     this.clearInputs();
   }
 
@@ -35,6 +40,7 @@ class AddDependentsDialog extends React.Component {
   }
 
   handleInputChange = e => {
+    console.log("Entro en el handleInputChange()");
     switch(e.target.id){
       case "nombre":
         this.setState({nombre: e.target.value, })
@@ -50,16 +56,34 @@ class AddDependentsDialog extends React.Component {
     }
   }
 
+  componentWillReceiveProps(nextProps){
+    console.log(nextProps);
+    this.setState({
+      nombre : nextProps.dependent.nombre_completo,
+      edad: nextProps.dependent.edad,
+      parentesco: nextProps.dependent.dependencia,
+    });
+  }
+  
+
   render() {
     return (
       <div>
+       
        <Dialog
           open={this.props.showingModal}
           onClose={this.handleClose}
           aria-labelledby="form-dialog-title"
         >
-          <DialogTitle id="form-dialog-title">Agregar Dependiente</DialogTitle>
+          <DialogTitle id="form-dialog-title">
+          {this.props.dependent._id == "0" ? 
+          <p> Agregar Dependiente </p>
+          :<p> Editar Dependiente </p>
+          }
+          
+          </DialogTitle>
           <DialogContent>
+          
             <TextField
               autoFocus
               margin="dense"
@@ -110,6 +134,7 @@ const mapStateToProps = (state) => {
       showingModal:state.showingModal,
       newDependent: state.newDependent,
       userId: state.userId,
+      dependent: state.dependent,
   }
 }
 

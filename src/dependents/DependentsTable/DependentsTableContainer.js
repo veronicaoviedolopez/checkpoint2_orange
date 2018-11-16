@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import DependentsTable from './components/DependentsTable';
 import { connect } from 'react-redux';
-import {fetchDependents, showAddModal, deleteDependent, showDeleteModal} from './../../../src/state/actions/dependentsAction';
+import {fetchDependents, showAddModal, deleteDependent, showDeleteModal, setDependent} from './../../../src/state/actions/dependentsAction';
 import loaddingImage from     './../../../src/images/Loading_icon.gif';
 import DependentsHeader from './components/header/dependentsHeader'
 import Button from '@material-ui/core/Button';
@@ -11,27 +11,42 @@ import DeleteDependentDialog from './components/deleteDepedent/deleteDependent';
 
 
 class DependentsTableContainer extends Component {
-    handleClickSetDependents = () => {
-        this.props.showAddModal();
-    }
-
     componentDidMount(){
         this.props.fetchDependents(this.props.match.params.usuario);
     }
     
-    handleDeleteDependents=(id, nombre) =>{
+    handleAddDependent = () => {
+        this.props.setDependent(
+            {
+            _id:0,
+            nombre_completo: "",
+            dependencia: "",
+            edad:0,
+            _usuario: "",
+            }
+        );
+        this.props.showAddModal();
+    }
+    handleDeleteDependent=(id, nombre) =>{
         this.props.showDeleteModal(id, nombre);
-        //this.props.deleteDepentent(id,this.props.match.params.usuario);
+    }
+    handleUpdateDependent = (x) =>{
+        console.log("voy a editar",x);
+        this.props.setDependent(x);
+        this.props.showAddModal();
     }
 
     render(){
         return(
             <div>
                 <DependentsHeader usuario={this.props.match.params.usuario} />
-                <Button variant="fab" color="secondary" aria-label="Add" onClick={this.handleClickSetDependents}  >
+                <Button variant="fab" color="secondary" aria-label="Add" onClick={this.handleAddDependent}  >
                         <AddIcon />
                 </Button>    
-                <DependentsTable onDeleteDependents={(id, nombre)=>this.handleDeleteDependents(id, nombre)} ></DependentsTable>
+                <DependentsTable 
+                    onUpdateDependent={(x)=>this.handleUpdateDependent(x)} 
+                    onDeleteDependent={(id, nombre)=>this.handleDeleteDependent(id, nombre)} 
+                />
                 <AddDependentsDialog></AddDependentsDialog>
                 <DeleteDependentDialog></DeleteDependentDialog>
                 { this.props.loading ?
@@ -52,6 +67,7 @@ const mapDispatchToProps = {
     showAddModal,
     deleteDependent,
     showDeleteModal,
+    setDependent,
 }
 
 const mapStateToProps = (state) => {
@@ -59,6 +75,7 @@ const mapStateToProps = (state) => {
         loading: state.loading,
         errorMessage:state.errorMessage,
         showingModal:state.showingModal,
+       
     }
 }
 
