@@ -1,8 +1,8 @@
 import {
-    FetchDependents_Loadding, FetchDependents_Success, FetchDependents_Error, 
-    ShowAddDependents_Dialog, AddedDependent, 
+    _Loadding, _Success, _Error, 
+    ShowAddEditDependents_Dialog, AddedEditedDependent, 
     ShowDeleteDependent_Dialog, DeletedDependent,
-    Set_Dependent, UpdatedDependent
+    Set_Dependent
 } from '../actions/dependentsAction'
 
 const initialState = {
@@ -17,37 +17,37 @@ const initialState = {
         _id:0,
         nombre_completo: "",
         dependencia: "",
-        edad:10,
+        edad:0,
         _usuario: "",
     },
 }
 
 const DependentsReducer = (state = initialState, action )=>{
     switch (action.type){
-        case FetchDependents_Loadding: 
+        case _Loadding: 
             return {
                 ...state,
                 loading: true
             }
-        case FetchDependents_Success: 
+        case _Success: 
         return {
             ...state,
             loading:false,
             dependentsList: action.dependents,
             userId: action.userId
         }
-        case FetchDependents_Error: 
+        case _Error: 
         return{
             ...state,
             loading:false,
             errorMessage:action.error
         }
-        case ShowAddDependents_Dialog:
+        case ShowAddEditDependents_Dialog:
             return{
                 ...state,
                 showingModal: !state.showingModal,
             }
-        case AddedDependent:
+        case AddedEditedDependent:
         return{
             ...state,
             loading: false,
@@ -70,12 +70,6 @@ const DependentsReducer = (state = initialState, action )=>{
         return{
             ...state,
             dependent : action.dependent,
-        }
-        case UpdatedDependent:
-        return{
-            ...state,
-            loading:false,
-            showingModal: false,
         }
         default:
             return state

@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {connect} from 'react-redux';
-import {showAddModal,addDependent, updateDependent} from  './../../../../state/actions/dependentsAction';
+import {showAddEditModal,addDependent, updateDependent} from  './../../../../state/actions/dependentsAction';
 
 
 class AddDependentsDialog extends React.Component {
@@ -30,13 +30,18 @@ class AddDependentsDialog extends React.Component {
   }
 
   handleClose = () => {
-    this.props.showAddModal();
+    this.props.showAddEditModal();
     this.clearInputs();
   }
 
   handleClickAddDependent = () => {
     if (this.props.dependent._id ==="")
-      this.props.addDependent(this.state.nombre, this.state.parentesco,this.state.edad,this.props.userId);
+      this.props.addDependent({
+          nombre_completo: this.state.nombre,
+          dependencia: this.state.parentesco,
+          edad: this.state.edad,
+          _usuario: this.props.userId
+      });
     else{
       this.props.updateDependent({
         _id: this.props.dependent._id,
@@ -148,7 +153,7 @@ const mapStateToProps = (state) => {
 }
 
 const mapDispatchToProps = {
-  showAddModal,
+  showAddEditModal,
   addDependent,
   updateDependent
 }

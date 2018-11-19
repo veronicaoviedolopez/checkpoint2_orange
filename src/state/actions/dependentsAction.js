@@ -1,81 +1,72 @@
 import axios from 'axios';
 
-export const FetchDependents_Loadding = "FECTH_DEPENDENTS_LOADDING";
-export const FetchDependents_Success ="FETCH_DEPENDENTS_SUCCESS";
-export const FetchDependents_Error = "FETCH_DEPENDENTS_ERROR";
+export const _Loadding =    "_LOADDING";
+export const _Success =     "_SUCCESS";
+export const _Error =       "_ERROR";
 
-export const ShowAddDependents_Dialog = "SHOW_ADD_DEPENDENT_DIALOG";
-export const AddedDependent = "ADDED_DEPENDENT";
-
+export const ShowAddEditDependents_Dialog = "SHOW_ADD_EDIT_DEPENDENT_DIALOG";
+export const AddedEditedDependent = "ADDED_EDITED_DEPENDENT";
 
 export const ShowDeleteDependent_Dialog = "SHOW_DELETE_DEPENDENT_DIALOG";
 export const DeletedDependent = "DELETED_DEPENDENT"
 
-
 export const Set_Dependent = "SET_DEPENDENT";
-
-export const UpdatedDependent = "UPDATED_DEPENDENT";
-
 
 // SHOW ALL DEPENDENTS BY USERID
 const FetchDependents = (props) => {
     return async (dispatch) => {
-        dispatch(FetchDependentsLoadding());
+        dispatch(rLoadding());
         try{
             const response = await axios.get(`https://g4-ch2.herokuapp.com/api/dependientes_usuario/orange/${props}`);
-            dispatch(FetchDependentsSuccess(response.data, props));
+            dispatch(rSuccess(response.data, props));
         }
         catch(error){
-            dispatch(FetchDependentsError(error));
+            dispatch(rError(error));
         }
     }
 }
 
-const FetchDependentsLoadding =() =>({
-    type: FetchDependents_Loadding,
+const rLoadding =() =>({
+    type: _Loadding,
 })
 
-const FetchDependentsSuccess = (dependents, userId) => ({
-    type: FetchDependents_Success,
+const rSuccess = (dependents, userId) => ({
+    type: _Success,
     dependents,
     userId,
 })
 
-const FetchDependentsError = (error) =>({
-    type: FetchDependents_Error,
+const rError = (error) =>({
+    type: _Error,
     error,
 })
 
 
 
 // ADD A DEPENDENT
-const ShowAddModal = () =>({
-    type: ShowAddDependents_Dialog
+const ShowAddEditModal = () =>({
+    type: ShowAddEditDependents_Dialog
 })
 
-const AddDependent = (nombre_completo,dependencia, edad, _usuario) =>{
+const AddDependent = (x) =>{
     return async (dispatch) => {
-        dispatch(FetchDependentsLoadding());
+        dispatch(rLoadding());
         try{
-            await axios.post('https://g4-ch2.herokuapp.com/api/dependientes/orange/',
-                {
-                    nombre_completo,
-                    dependencia, 
-                    edad,
-                    _usuario,
-                }
+            await axios.post(
+                'https://g4-ch2.herokuapp.com/api/dependientes/orange/',
+                x
             );
-            dispatch(FetchDependents(_usuario));
-            dispatch(AddDependentSuccess());
+            dispatch(FetchDependents(x._usuario));
+            dispatch(AddEditDependentSuccess());
         }
         catch(error){
-            dispatch(FetchDependentsError(error));
+            dispatch(rError(error));
         }
     }
 }
 
-const AddDependentSuccess = () => ({
-    type: AddedDependent
+const AddEditDependentSuccess = () => ({
+    type: AddedEditedDependent
 })
 
 
@@ -87,14 +78,14 @@ const ShowDeleteModal = (dependentId, dependentName) =>({
 })
 const DeleteDependent =(_id, _usuario)=>{
     return async(dispatch) =>{
-        dispatch(FetchDependentsLoadding());
+        dispatch(rLoadding());
         try{
             await axios.delete(`https://g4-ch2.herokuapp.com/api/dependientes/orange/${_id}`);
             dispatch(FetchDependents(_usuario));
             dispatch(DeletedDependentSuccess());
         }
         catch(error){
-            dispatch(FetchDependentsError(error));
+            dispatch(rError(error));
         }
 
     }
@@ -110,25 +101,20 @@ const SetDependent = (dependent)=>({
     dependent
 })
 
-const UpdateDependentSuccess = (dependent)=>({
-    type: UpdatedDependent,
-    dependent
-})
-
 const UpdateDependent = (dependent) =>{
     console.log("Action UpdateDependent()", dependent);
     return async (dispatch) => {
-        dispatch(FetchDependentsLoadding());
+        dispatch(rLoadding());
         try{
             await axios.post(
                 `https://g4-ch2.herokuapp.com/api/dependientes/orange/${dependent._id}`,
                 dependent  
             );
             dispatch(FetchDependents(dependent._usuario));
-            dispatch(UpdateDependentSuccess());
+            dispatch(AddEditDependentSuccess());
         }
         catch(error){
-            dispatch(FetchDependentsError(error));
+            dispatch(rError(error));
         }
     }
 }
@@ -138,7 +124,7 @@ const UpdateDependent = (dependent) =>{
 export {
     FetchDependents as fetchDependents, 
     AddDependent as addDependent, 
-    ShowAddModal as showAddModal,
+    ShowAddEditModal as showAddEditModal,
     DeleteDependent as deleteDependent,
     ShowDeleteModal as showDeleteModal,
     SetDependent as setDependent,
