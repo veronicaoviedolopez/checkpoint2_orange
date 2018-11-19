@@ -14,6 +14,8 @@ export const DeletedDependent = "DELETED_DEPENDENT"
 
 export const Set_Dependent = "SET_DEPENDENT";
 
+export const UpdatedDependent = "UPDATED_DEPENDENT";
+
 
 // SHOW ALL DEPENDENTS BY USERID
 const FetchDependents = (props) => {
@@ -108,10 +110,29 @@ const SetDependent = (dependent)=>({
     dependent
 })
 
-const UpdateDependent = (dependent)=>({
-    type: Set_Dependent,
+const UpdateDependentSuccess = (dependent)=>({
+    type: UpdatedDependent,
     dependent
 })
+
+const UpdateDependent = (dependent) =>{
+    console.log("Action UpdateDependent()", dependent);
+    return async (dispatch) => {
+        dispatch(FetchDependentsLoadding());
+        try{
+            await axios.post(
+                `https://g4-ch2.herokuapp.com/api/dependientes/orange/${dependent._id}`,
+                dependent  
+            );
+            dispatch(FetchDependents(dependent._usuario));
+            dispatch(UpdateDependentSuccess());
+        }
+        catch(error){
+            dispatch(FetchDependentsError(error));
+        }
+    }
+}
+
 
 
 export {
@@ -120,5 +141,6 @@ export {
     ShowAddModal as showAddModal,
     DeleteDependent as deleteDependent,
     ShowDeleteModal as showDeleteModal,
-    SetDependent as setDependent
+    SetDependent as setDependent,
+    UpdateDependent as updateDependent
     };

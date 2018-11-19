@@ -2,7 +2,7 @@ import {
     FetchDependents_Loadding, FetchDependents_Success, FetchDependents_Error, 
     ShowAddDependents_Dialog, AddedDependent, 
     ShowDeleteDependent_Dialog, DeletedDependent,
-    Set_Dependent
+    Set_Dependent, UpdatedDependent
 } from '../actions/dependentsAction'
 
 const initialState = {
@@ -70,6 +70,12 @@ const DependentsReducer = (state = initialState, action )=>{
         return{
             ...state,
             dependent : action.dependent,
+        }
+        case UpdatedDependent:
+        return{
+            ...state,
+            loading:false,
+            showingModal: false,
         }
         default:
             return state

@@ -6,7 +6,7 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {connect} from 'react-redux';
-import {showAddModal,addDependent} from  './../../../../state/actions/dependentsAction';
+import {showAddModal,addDependent, updateDependent} from  './../../../../state/actions/dependentsAction';
 
 
 class AddDependentsDialog extends React.Component {
@@ -35,12 +35,22 @@ class AddDependentsDialog extends React.Component {
   }
 
   handleClickAddDependent = () => {
-    this.props.addDependent(this.state.nombre, this.state.parentesco,this.state.edad,this.props.userId);
+    if (this.props.dependent._id ==="")
+      this.props.addDependent(this.state.nombre, this.state.parentesco,this.state.edad,this.props.userId);
+    else{
+      this.props.updateDependent({
+        _id: this.props.dependent._id,
+        nombre_completo: this.state.nombre,
+        dependencia: this.state.parentesco,
+        edad:this.state.edad,
+        _usuario: this.props.dependent._usuario
+      });
+    }
+   
     this.clearInputs();
   }
 
   handleInputChange = e => {
-    console.log("Entro en el handleInputChange()");
     switch(e.target.id){
       case "nombre":
         this.setState({nombre: e.target.value, })
@@ -57,7 +67,6 @@ class AddDependentsDialog extends React.Component {
   }
 
   componentWillReceiveProps(nextProps){
-    console.log(nextProps);
     this.setState({
       nombre : nextProps.dependent.nombre_completo,
       edad: nextProps.dependent.edad,
@@ -67,7 +76,7 @@ class AddDependentsDialog extends React.Component {
   
 
   render() {
-    return (
+     return (
       <div>
        
        <Dialog
@@ -76,7 +85,7 @@ class AddDependentsDialog extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-          {this.props.dependent._id == "0" ? 
+          {this.props.dependent._id === "" ? 
           <p> Agregar Dependiente </p>
           :<p> Editar Dependiente </p>
           }
@@ -140,7 +149,8 @@ const mapStateToProps = (state) => {
 
 const mapDispatchToProps = {
   showAddModal,
-  addDependent
+  addDependent,
+  updateDependent
 }
 
 

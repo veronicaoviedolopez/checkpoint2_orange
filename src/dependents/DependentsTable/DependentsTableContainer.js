@@ -16,22 +16,22 @@ class DependentsTableContainer extends Component {
     }
     
     handleAddDependent = () => {
-        this.props.setDependent(
-            {
-            _id:0,
+        const dependent = {
+            _id:"",
             nombre_completo: "",
             dependencia: "",
             edad:0,
             _usuario: "",
-            }
-        );
+        };
+        this.props.setDependent(dependent);
         this.props.showAddModal();
     }
+
     handleDeleteDependent=(id, nombre) =>{
         this.props.showDeleteModal(id, nombre);
     }
+
     handleUpdateDependent = (x) =>{
-        console.log("voy a editar",x);
         this.props.setDependent(x);
         this.props.showAddModal();
     }
