@@ -5,7 +5,7 @@ import AddDependents from './dependents/DependentsTable/components/addDependents
 import {Provider} from 'react-redux'
 import store from './state/store/store';
 import {BrowserRouter, Route, Switch} from 'react-router-dom';
-import Home from './home/home';
+import UsersTableContainer from './users/UsersTable/usersTableContainer';
 
 
 class App extends Component {
@@ -14,9 +14,34 @@ class App extends Component {
         <Provider store={store} >
         <BrowserRouter>
           <Switch>
-              <Route exact path="/"              render={(props)=><Home                     {...props}></Home>}>                     </Route>
-              <Route path="/dependents/:usuario?" render={(props)=><DependentsTableContainer {...props}></DependentsTableContainer>}> </Route> 
-              <Route path="/dependentsAdd/:usuario?" render={(props)=><AddDependents {...props}></AddDependents>}> </Route> 
+              <Route 
+                exact path="/"               
+                render={
+                  (props)=>
+                    <UsersTableContainer
+                      {...props}>
+                    </UsersTableContainer>
+                }
+              />
+
+              <Route 
+                path="/dependents/:usuario?" 
+                render={
+                  (props)=>
+                    <DependentsTableContainer 
+                      {...props}/>
+                }
+              />
+
+              <Route 
+                path="/dependentsAdd/:usuario?" 
+                render={
+                  (props)=>
+                    <AddDependents 
+                    {...props}/>
+                }
+              /> 
+
           </Switch>
         </BrowserRouter>
          

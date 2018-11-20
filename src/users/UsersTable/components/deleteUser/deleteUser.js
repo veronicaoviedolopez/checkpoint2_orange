@@ -5,16 +5,16 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {connect} from 'react-redux';
-import {showDeleteModal,deleteDependent} from  './../../../../state/actions/dependentsAction';
+import {showDeleteModal,deleteUser} from  './../../../../state/actions/usersAction';
 
 
-class DeleteDependentDialog extends React.Component {
+class DeleteUserDialog extends React.Component {
     handleClose = () => {
       this.props.showDeleteModal();
     }
   
     handleClickDeleteDependent = () => {
-      this.props.deleteDependent(this.props.dependentId, this.props.userId);
+      this.props.deleteUser(this.props.user);
     }
    
     render() {
@@ -25,14 +25,13 @@ class DeleteDependentDialog extends React.Component {
             onClose={this.handleClose}
             aria-labelledby="form-dialog-title"
           >
-            <DialogTitle id="form-dialog-title">Eliminar Dependiente</DialogTitle>
+            <DialogTitle id="form-dialog-title">Eliminar Usuario</DialogTitle>
             <DialogContent>
-            <p>¿Esta seguro que desea eliminar el dependiente seleccionado
-              <br>
-              </br>
-              {this.props.dependentName} ?
+            <p>¿Esta seguro que desea eliminar el usuario seleccionado
+              <br/>
+            {this.props.user.nombre} {this.props.user.apellidos.paterno} {this.props.user.apellidos.materno}?
             </p>
-
+            <br/>
             </DialogContent>
             <DialogActions>
               <Button onClick={this.handleClose} color="primary">
@@ -48,14 +47,14 @@ class DeleteDependentDialog extends React.Component {
     }
   }
   
-  const mapStateToProps = ({dependentReducer}) => {
-    return dependentReducer;
+  const mapStateToProps = ({usersReducer}) => {
+    return usersReducer;
   }
   
   const mapDispatchToProps = {
     showDeleteModal,
-    deleteDependent
+    deleteUser
   }
   
   
-  export default  connect(mapStateToProps, mapDispatchToProps)(DeleteDependentDialog)
+  export default  connect(mapStateToProps, mapDispatchToProps)(DeleteUserDialog)

@@ -31,10 +31,8 @@ const DependentsTable =props =>
                     </tbody>
                 </Table>
 
-const mapStateToProps = (state)=>{
-    return{
-        dependentsList: state.dependentsList
-    }
+const mapStateToProps = ({dependentReducer})=>{
+    return dependentReducer;
 }
 
 export default connect(mapStateToProps)(DependentsTable);

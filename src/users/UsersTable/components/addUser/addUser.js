@@ -6,16 +6,19 @@ import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import {connect} from 'react-redux';
-import {showAddEditModal,addDependent, updateDependent} from  './../../../../state/actions/dependentsAction';
+import {showAddEditModal, addUser, updateUser} from  './../../../../state/actions/usersAction';
 
 
-class AddDependentsDialog extends React.Component {
+class AddUsersDialog extends React.Component {
   constructor(props){
     super(props);
     this.state= {
       nombre : "",
       edad: 0,
-      parentesco: "",
+      apellidos: {
+        paterno:"",
+        materno:"",
+      },
     }
   }
  
@@ -25,7 +28,10 @@ class AddDependentsDialog extends React.Component {
     this.setState({
       nombre :"",
       edad: "",
-      parentesco:"",
+      apellidos:{
+        paterno:"",
+        materno:"",
+      },
     });
   }
 
@@ -34,22 +40,27 @@ class AddDependentsDialog extends React.Component {
     this.clearInputs();
   }
 
-  handleClickAddDependent = () => {
-    if (this.props.dependent._id ==="")
-      this.props.addDependent({
-          nombre_completo: this.state.nombre,
-          dependencia: this.state.parentesco,
-          edad: this.state.edad,
-          _usuario: this.props.userId
+  handleClickAddUser = () => {
+    if (this.props.user._id ==="")
+      this.props.addUser({
+          nombre: this.state.nombre,
+          apellidos: {
+            paterno:this.state.apellidos.paterno,
+            materno: this.state.apellidos.materno,
+          },
+          edad: this.state.edad
       });
     else{
-      this.props.updateDependent({
-        _id: this.props.dependent._id,
-        nombre_completo: this.state.nombre,
-        dependencia: this.state.parentesco,
+      this.props.updateUser({
+        _id: this.props.user._id,
+        nombre: this.state.nombre,
+        apellidos: {
+          paterno:this.state.apellidos.paterno,
+          materno: this.state.apellidos.materno,
+        },
         edad:this.state.edad,
-        _usuario: this.props.dependent._usuario
       });
+      
     }
    
     this.clearInputs();
@@ -63,8 +74,26 @@ class AddDependentsDialog extends React.Component {
       case "edad":
         this.setState({edad: e.target.value, })
         break;
-      case "parentesco":
-        this.setState({parentesco: e.target.value, })
+      case "apellidos_paterno":
+        this.setState(
+          {
+            apellidos: 
+              { paterno: e.target.value,
+                materno: this.state.apellidos.materno,
+              }
+          }
+        );
+        break;
+        case "apellidos_materno":
+          this.setState(
+            {
+              apellidos: 
+                { 
+                  materno: e.target.value,
+                  paterno:  this.state.apellidos.paterno,
+                }
+            }
+          );
         break;
       default:
         return;
@@ -73,9 +102,12 @@ class AddDependentsDialog extends React.Component {
 
   componentWillReceiveProps(nextProps){
     this.setState({
-      nombre : nextProps.dependent.nombre_completo,
-      edad: nextProps.dependent.edad,
-      parentesco: nextProps.dependent.dependencia,
+      nombre : nextProps.user.nombre,
+      edad: nextProps.user.edad,
+      apellidos: {
+        paterno: nextProps.user.apellidos.paterno,
+        materno: nextProps.user.apellidos.materno,
+      }
     });
   }
   
@@ -90,9 +122,9 @@ class AddDependentsDialog extends React.Component {
           aria-labelledby="form-dialog-title"
         >
           <DialogTitle id="form-dialog-title">
-          {this.props.dependent._id === "" ? 
-          <p> Agregar Dependiente </p>
-          :<p> Editar Dependiente </p>
+          {this.props.user._id === "" ? 
+          <p> Agregar User </p>
+          :<p> Editar User </p>
           }
           
           </DialogTitle>
@@ -102,7 +134,7 @@ class AddDependentsDialog extends React.Component {
               autoFocus
               margin="dense"
               id="nombre"
-              label="Nombre Completo"
+              label="Nombre"
               type="text"
               fullWidth
               value={this.state.nombre}
@@ -121,11 +153,21 @@ class AddDependentsDialog extends React.Component {
 
             <TextField
               margin="dense"
-              id="parentesco"
-              label="Parentesco"
+              id="apellidos_paterno"
+              label="apellido paterno"
               type="text"
               fullWidth
-              value={this.state.parentesco}
+              value={this.state.apellidos.paterno}
+              onChange={(e) => this.handleInputChange(e) }
+            />
+
+               <TextField
+              margin="dense"
+              id="apellidos_materno"
+              label="apellido materno"
+              type="text"
+              fullWidth
+              value={this.state.apellidos.materno}
               onChange={(e) => this.handleInputChange(e) }
             />
           </DialogContent>
@@ -133,7 +175,7 @@ class AddDependentsDialog extends React.Component {
             <Button onClick={this.handleClose} color="primary">
               Cancelar
             </Button>
-            <Button onClick={this.handleClickAddDependent} color="primary">
+            <Button onClick={this.handleClickAddUser} color="primary">
               Guardar
             </Button>
           </DialogActions>
@@ -143,15 +185,15 @@ class AddDependentsDialog extends React.Component {
   }
 }
 
-const mapStateToProps = ({dependentReducer}) => {
-  return dependentReducer;
+const mapStateToProps = ({usersReducer}) => {
+  return usersReducer;
 }
 
 const mapDispatchToProps = {
   showAddEditModal,
-  addDependent,
-  updateDependent
+  addUser,
+  updateUser
 }
 
 
-export default  connect(mapStateToProps, mapDispatchToProps)(AddDependentsDialog)
+export default  connect(mapStateToProps, mapDispatchToProps)(AddUsersDialog)

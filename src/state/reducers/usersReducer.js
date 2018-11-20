@@ -1,75 +1,74 @@
 import {
-    _Loadding, _Success, _Error, 
-    ShowAddEditDependents_Dialog, AddedEditedDependent, 
-    ShowDeleteDependent_Dialog, DeletedDependent,
-    Set_Dependent
-} from '../actions/dependentsAction'
+    _LoaddingU, _SuccessU, _ErrorU, 
+    ShowAddEditUser_Dialog, AddedEditedUser, 
+    ShowDeleteUser_Dialog, DeletedUser,
+    Set_User
+} from '../actions/usersAction'
 
 const initialState = {
-    dependentsList : [],
+    usersList : [],
     loading: false,
     errorMessage:"",
     userId: "",
     showingModal: false,
     showingDeleteModal: false,
-    dependentName :"",
-    dependent:{
-        _id:0,
-        nombre_completo: "",
-        dependencia: "",
-        edad:0,
-        _usuario: "",
+    user_Nombre :"",
+    user:{
+        _id:"0",
+        nombre: "vero",
+        apellidos: {
+          paterno:"oviedo",
+          materno:"lupez",
+        },
+        edad:20,
     },
 }
 
 export default (state = initialState, action )=>{
     switch (action.type){
-        case _Loadding: 
+        case _LoaddingU: 
             return {
                 ...state,
                 loading: true
             }
-        case _Success: 
+        case _SuccessU: 
         return {
             ...state,
             loading:false,
-            dependentsList: action.dependents,
-            userId: action.userId
+            usersList: action.users
         }
-        case _Error: 
+        case _ErrorU: 
         return{
             ...state,
             loading:false,
             errorMessage:action.error
         }
-        case ShowAddEditDependents_Dialog:
+        case ShowAddEditUser_Dialog:
             return{
                 ...state,
                 showingModal: !state.showingModal,
             }
-        case AddedEditedDependent:
+        case AddedEditedUser:
         return{
             ...state,
             loading: false,
             showingModal: false,
         }
-        case ShowDeleteDependent_Dialog:
+        case ShowDeleteUser_Dialog:
         return{
             ...state,
             showingDeleteModal: !state.showingDeleteModal,
-            dependentId: action.dependentId, 
-            dependentName: action.dependentName,
         }
-        case DeletedDependent:
+        case DeletedUser:
         return{
             ...state,
             loading: false,
             showingDeleteModal: false,
         }
-        case Set_Dependent:
+        case Set_User:
         return{
             ...state,
-            dependent : action.dependent,
+            user : action.user,
         }
         default:
             return state

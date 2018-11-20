@@ -70,13 +70,8 @@ const mapDispatchToProps = {
     setDependent,
 }
 
-const mapStateToProps = (state) => {
-    return {
-        loading: state.loading,
-        errorMessage:state.errorMessage,
-        showingModal:state.showingModal,
-       
-    }
+const mapStateToProps = ({dependentReducer}) => {
+    return dependentReducer;
 }
 
 export default connect(mapStateToProps,mapDispatchToProps)(DependentsTableContainer);
