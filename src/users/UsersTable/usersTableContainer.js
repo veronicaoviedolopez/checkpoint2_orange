@@ -25,18 +25,27 @@ class UsersTableContainer extends Component {
             },
             edad:0,
         };
-        this.props.setUser(user);
+        this.handleSetUser(user);
         this.props.showAddEditModal();
     }
 
     handleDeleteUser=(x) =>{
-        this.props.setUser(x);
+        this.handleSetUser(x);;
         this.props.showDeleteModal();
     }
 
     handleUpdateUser = (x) =>{
-        this.props.setUser(x);
+        this.handleSetUser(x);
         this.props.showAddEditModal();
+    }
+
+    handleShowUser = (x)=>{
+        this.handleSetUser(x);
+        this.props.showAddEditModal();
+    }
+
+    handleSetUser=(x) =>{
+        this.props.setUser(x);
     }
 
     render(){
@@ -46,10 +55,15 @@ class UsersTableContainer extends Component {
                 <Button variant="fab" color="secondary" aria-label="Add" onClick={this.handleAddUser}  >
                         <AddIcon />
                 </Button>    
+                <div className="divTable" >
                 <UsersTable 
                     onUpdateUser={(x)=>this.handleUpdateUser(x)} 
                     onDeleteUser={(x)=>this.handleDeleteUser(x)} 
-                />
+                    onShowUser = {(x)=>this.handleShowUser(x)} 
+                    onSetUser= {(x)=>this.handleSetUser(x)}
+                />    
+                </div>
+                
                 
                 <AddUserDialog/>	
                 <DeleteUserDialog/>

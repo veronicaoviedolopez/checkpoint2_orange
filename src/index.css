@@ -1,0 +1,9 @@
+nav{
+    background-color: black;
+}
+
+
+.divTable{
+    display: flex;
+    align-content: center;
+}

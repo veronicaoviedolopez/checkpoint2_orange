@@ -39,8 +39,8 @@ class DependentsTableContainer extends Component {
     render(){
         return(
             <div>
-                <DependentsHeader usuario={this.props.match.params.usuario} />
-                <Button variant="fab" color="secondary" aria-label="Add" onClick={this.handleAddDependent}  >
+                <DependentsHeader />
+                Dependiente <Button variant="fab" color="secondary" aria-label="Add" onClick={this.handleAddDependent}  >
                         <AddIcon />
                 </Button>    
                 <DependentsTable 

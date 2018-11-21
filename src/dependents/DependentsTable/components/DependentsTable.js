@@ -4,6 +4,7 @@ import './DependentsTable.css'
 import { connect } from 'react-redux';
 import DeleteIcon from '@material-ui/icons/Delete';
 import EditIcon from '@material-ui/icons/Edit';
+import Tooltip from '@material-ui/core/Tooltip';
 
 const DependentsTable =props => 
                 <Table dark>
@@ -23,8 +24,16 @@ const DependentsTable =props =>
                                     <td>{x.nombre_completo}</td>
                                     <td>{x.edad}</td>
                                     <td>{x.dependencia}</td>
-                                    <td><EditIcon onClick= {()=>props.onUpdateDependent(x)}/></td>
-                                    <td><DeleteIcon onClick={()=>props.onDeleteDependent(x._id,x.nombre_completo)}/></td>
+                                    <td> 
+                                        <Tooltip title="Editar">
+                                            <EditIcon onClick= {()=>props.onUpdateDependent(x)}/>
+                                        </Tooltip>
+                                    </td>
+                                    <td>
+                                        <Tooltip title="Borrar">
+                                            <DeleteIcon onClick={()=>props.onDeleteDependent(x._id,x.nombre_completo)}/>
+                                        </Tooltip>
+                                    </td>
                                 </tr>
                             )         
                         })}

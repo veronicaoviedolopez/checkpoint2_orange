@@ -1,16 +1,23 @@
 import React from 'react';
 import './dependentsHeader.css';
+import {connect} from  'react-redux';
 
 const Header = props => 
     <div>
-         <h3>{props.usuario}</h3>
-                <div className="header" >
-                    <div className="subHeader">
-                        <h5> Dependientes  </h5>
-                    </div>
-                    
-                </div>
+        <div className="headerDependent" >
+            {`Usuario: ${props.user.nombre} ${props.user.apellidos.paterno} ${props.user.apellidos.materno} `}
+             <br/>     
+            {`Edad: ${props.user.edad}`}      
+            <br/>
+        </div>
     </div>
 
+    
+    const mapStateToProps =({usersReducer})=>{
+        return ({
+            user: usersReducer.user,
+        }
+        )
+    }
        
-export default Header;
+export default connect(mapStateToProps) (Header);
